@@ -1,0 +1,55 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+LocalPlayer.Chatted:Connect(function(message)
+    if message == "/e execute" then
+        if game.PlaceId == 4442272183 or game.PlaceId == 2753915549 or game.PlaceId == 7449423635 then
+            print("Executing script for game ID 2753915549")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua"))()
+        end
+
+        if game.PlaceId == 10449761463 then
+            print("Executing script for game ID 10449761463")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/tamarixr/tamhub/main/bettertamhub.lua"))()
+        end
+    elseif message == "/e rejoin" then
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    elseif message == "/e copyid" then
+        local gameId = tostring(game.PlaceId)
+        setclipboard(gameId)
+    end
+end)
+
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local function rejoinDifferentServer()
+    TeleportService:Teleport(game.PlaceId, player)
+end
+
+local function onPlayerChatted(message)
+    if message:lower() == "/e rejoin" then
+        rejoinDifferentServer()
+    end
+end
+
+player.Chatted:Connect(onPlayerChatted)
+
+local function kickPlayerIfKicked(message, sender)
+    if message:lower() == "!kick" and sender ~= LocalPlayer then
+        LocalPlayer:Kick("You have been banned from Sysgeta.")
+    end
+end
+
+for _, player in pairs(Players:GetPlayers()) do
+    player.Chatted:Connect(function(message)
+        kickPlayerIfKicked(message, player)
+    end)
+end
+
+Players.PlayerAdded:Connect(function(player)
+    player.Chatted:Connect(function(message)
+        kickPlayerIfKicked(message, player)
+    end)
+end)
