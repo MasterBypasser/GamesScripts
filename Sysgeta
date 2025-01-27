@@ -4,13 +4,18 @@ local LocalPlayer = Players.LocalPlayer
 LocalPlayer.Chatted:Connect(function(message)
     if message == "/e execute" then
         if game.PlaceId == 4442272183 or game.PlaceId == 2753915549 or game.PlaceId == 7449423635 then
-            print("Executing script for game ID 2753915549")
+            print("Executing the script for the game Blox Fruits")
             loadstring(game:HttpGet("https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua"))()
         end
 
         if game.PlaceId == 10449761463 then
-            print("Executing script for game ID 10449761463")
+            print("Executing the script for the game The Strongest Battlegrounds")
             loadstring(game:HttpGet("https://raw.githubusercontent.com/tamarixr/tamhub/main/bettertamhub.lua"))()
+        end
+
+        if game.PlaceId == 16732694052 then
+            print("Executing the script for the game fisch ")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
         end
     elseif message == "/e rejoin" then
         TeleportService:Teleport(game.PlaceId, LocalPlayer)
