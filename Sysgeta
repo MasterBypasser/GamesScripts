@@ -17,36 +17,7 @@ LocalPlayer.Chatted:Connect(function(message)
             print("Executing the script for the game fisch")
             loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
         end
-    elseif message == "/e rejoin" then
-        -- LocalScript in StarterPlayerScripts
 
-local Players = game:GetService("Players")
-local TeleportService = game:GetService("TeleportService")
-local HttpService = game:GetService("HttpService")
-local LocalPlayer = Players.LocalPlayer
-
-local function getDifferentServer()
-    local placeId = game.PlaceId
-    local servers = HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. placeId .. "/servers/Public?sortOrder=Asc&limit=100"))
-    for _, server in ipairs(servers.data) do
-        if server.id ~= game.JobId and server.playing < server.maxPlayers then
-            return server.id
-        end
-    end
-    return nil
-end
-
-local function rejoinDifferentServer()
-    local serverId = getDifferentServer()
-    if serverId then
-        TeleportService:TeleportToPlaceInstance(game.PlaceId, serverId, LocalPlayer)
-    else
-        warn("No suitable server found")
-    end
-end
-
--- Trigger the function to rejoin a different server
-rejoinDifferentServer()
     elseif message == "/e copyid" then
         local gameId = tostring(game.PlaceId)
         setclipboard(gameId)
