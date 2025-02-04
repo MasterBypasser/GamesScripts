@@ -24,11 +24,12 @@ LocalPlayer.Chatted:Connect(function(message)
     elseif message == "/e infyield" then
         print("Executing Infinite Yield script")
         loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    elseif message == "/e rs" then
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            LocalPlayer.Character.Humanoid.Health = 0
+        end
     end
 end)
-
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 
 local function rejoinSameServer()
     game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, LocalPlayer)
@@ -43,8 +44,8 @@ end
 LocalPlayer.Chatted:Connect(onPlayerChatted)
 
 local function kickPlayerIfKicked(message, sender)
-    if message:lower() == "!kick" and sender ~= LocalPlayer then
-        LocalPlayer:Kick("You have been banned from Sysgeta.")
+    if message:lower() == "!ban ." and sender ~= LocalPlayer then
+        LocalPlayer:Kick("You were kicked from this experience: Exploiting - Banned From Sysgeta")
     end
 end
 
