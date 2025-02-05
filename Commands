@@ -18,16 +18,20 @@ LocalPlayer.Chatted:Connect(function(message)
             loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
         end
 
-    elseif message == "/e copyid" then
+        if game.PlaceId == 286090429 then
+            print("Executing the script for the game QuotasHub")
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Insertl/QuotasHub/main/BETAv1.3"))()
+        end
+
+    elseif message == "/e copygameid" then
         local gameId = tostring(game.PlaceId)
         setclipboard(gameId)
+    elseif message == "/e copyserverid" then
+        local serverId = tostring(game.JobId)
+        setclipboard(serverId)
     elseif message == "/e infyield" then
         print("Executing Infinite Yield script")
         loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
-    elseif message == "/e rs" then
-        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
-            LocalPlayer.Character.Humanoid.Health = 0
-        end
     end
 end)
 
