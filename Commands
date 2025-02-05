@@ -19,7 +19,7 @@ LocalPlayer.Chatted:Connect(function(message)
         end
 
         if game.PlaceId == 286090429 then
-            print("Executing the script for the game QuotasHub")
+            print("Executing the script for the game Arsenal")
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Insertl/QuotasHub/main/BETAv1.3"))()
         end
 
