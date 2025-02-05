@@ -1,5 +1,10 @@
 local Players = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
 local LocalPlayer = Players.LocalPlayer
+
+local function printCommandInfo(command, description)
+    print(command .. ": " .. description)
+end
 
 LocalPlayer.Chatted:Connect(function(message)
     if message == "/e execute" then
@@ -19,29 +24,37 @@ LocalPlayer.Chatted:Connect(function(message)
         end
 
         if game.PlaceId == 286090429 then
-            print("Executing the script for the game Arsenal")
+            print("Executing the script for the game QuotasHub")
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Insertl/QuotasHub/main/BETAv1.3"))()
         end
-
+        printCommandInfo("/e execute", "Executes the game-specific script")
     elseif message == "/e copygameid" then
         local gameId = tostring(game.PlaceId)
         setclipboard(gameId)
+        printCommandInfo("/e copygameid", "Copies the game's PlaceId to clipboard")
     elseif message == "/e copyserverid" then
         local serverId = tostring(game.JobId)
         setclipboard(serverId)
+        printCommandInfo("/e copyserverid", "Copies the server's JobId to clipboard")
+    elseif message:sub(1, 14) == "/e joinserver " then
+        local serverId = message:sub(15)
+        TeleportService:TeleportToPlaceInstance(game.PlaceId, serverId, LocalPlayer)
+        printCommandInfo("/e joinserver", "Teleports to the specified server")
     elseif message == "/e infyield" then
         print("Executing Infinite Yield script")
         loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+        printCommandInfo("/e infyield", "Executes the Infinite Yield script")
     end
 end)
 
 local function rejoinSameServer()
-    game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, LocalPlayer)
+    TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, LocalPlayer)
 end
 
 local function onPlayerChatted(message)
     if message:lower() == "/e rejoin" then
         rejoinSameServer()
+        printCommandInfo("/e rejoin", "Rejoins the same server")
     end
 end
 
