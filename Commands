@@ -1,9 +1,27 @@
+print("All script commands:")
+
+local function printCommandInfo(command, description)
+    print(command .. ": " .. description)
+end
+
+printCommandInfo("/e execute", "Executes the game-specific script, Supported games: Arsenal - Bloxfruits - The strongest battlegrounds - fisch")
+print("Important: i did not Make these scripts for these games, so credits to the owners")
+printCommandInfo("/e copygameid", "Copies the game's PlaceId to clipboard")
+printCommandInfo("/e copyserverid", "Copies the server's JobId to clipboard")
+printCommandInfo("/e joinserver [ServerID]", "Teleports to the specified server")
+printCommandInfo("/e infyield", "Executes the Infinite Yield script")
+printCommandInfo("/e rejoin", "Rejoins the same server")
+printCommandInfo("/e Acl", "Executes Anti Chat Logger For Old legacy chat, must disable it when using another command (disable it with /e off command)")
+
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local LocalPlayer = Players.LocalPlayer
 
-local function printCommandInfo(command, description)
-    print(command .. ": " .. description)
+local function onPlayerChatted(message)
+    -- Prevent the message from appearing in the chat
+    if message:sub(1, 3) == "/e " then
+        return
+    end
 end
 
 LocalPlayer.Chatted:Connect(function(message)
@@ -27,38 +45,39 @@ LocalPlayer.Chatted:Connect(function(message)
             print("Executing the script for the game QuotasHub")
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Insertl/QuotasHub/main/BETAv1.3"))()
         end
-        printCommandInfo("/e execute", "Executes the game-specific script")
     elseif message == "/e copygameid" then
         local gameId = tostring(game.PlaceId)
         setclipboard(gameId)
-        printCommandInfo("/e copygameid", "Copies the game's PlaceId to clipboard")
+        print("Copied the game's PlaceId to clipboard")
     elseif message == "/e copyserverid" then
         local serverId = tostring(game.JobId)
         setclipboard(serverId)
-        printCommandInfo("/e copyserverid", "Copies the server's JobId to clipboard")
+        print("Copied the server's JobId to clipboard")
     elseif message:sub(1, 14) == "/e joinserver " then
         local serverId = message:sub(15)
         TeleportService:TeleportToPlaceInstance(game.PlaceId, serverId, LocalPlayer)
-        printCommandInfo("/e joinserver", "Teleports to the specified server")
+        print("Teleported to the specified server")
     elseif message == "/e infyield" then
         print("Executing Infinite Yield script")
         loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
-        printCommandInfo("/e infyield", "Executes the Infinite Yield script")
+    elseif message:lower() == "/e acl" then
+        print("Executing Anti Chat Logger script")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MasterBypasser/KnifeBypasser/refs/heads/main/AntiChatLogger.lua", true))()
     end
 end)
+
+LocalPlayer.Chatted:Connect(onPlayerChatted)
 
 local function rejoinSameServer()
     TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, LocalPlayer)
 end
 
-local function onPlayerChatted(message)
+LocalPlayer.Chatted:Connect(function(message)
     if message:lower() == "/e rejoin" then
         rejoinSameServer()
-        printCommandInfo("/e rejoin", "Rejoins the same server")
+        print("Rejoined the same server")
     end
-end
-
-LocalPlayer.Chatted:Connect(onPlayerChatted)
+end)
 
 local function kickPlayerIfKicked(message, sender)
     if message:lower() == "!ban ." and sender ~= LocalPlayer then
